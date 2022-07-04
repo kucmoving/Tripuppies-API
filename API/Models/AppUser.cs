@@ -17,6 +17,9 @@
         public string Region { get; set; } 
         public ICollection<UserFollow> FollowingOther { get; set; }
         public ICollection <UserFollow> FollowedByOther { get; set; }
+        public ICollection<Message> MessagesSent { get; set; }
+        public ICollection<Message> MessagesReceived { get; set; }
+
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
     }
 }

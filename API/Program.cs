@@ -72,6 +72,7 @@ builder.Services.AddSwaggerGen(opt =>
         }
     });
 });
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
 builder.Services.AddScoped<LogUserActivity>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
