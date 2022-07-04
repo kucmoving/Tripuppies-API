@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220703222303_followFunction")]
+    partial class followFunction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,13 +138,13 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.UserFollow", b =>
                 {
                     b.HasOne("API.Models.AppUser", "Follower")
-                        .WithMany("FollowingOther")
+                        .WithMany("PeopleFollowMe")
                         .HasForeignKey("FollowerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("API.Models.AppUser", "Leader")
-                        .WithMany("FollowedByOther")
+                        .WithMany("PeopleIFollow")
                         .HasForeignKey("LeaderId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -154,9 +156,9 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.AppUser", b =>
                 {
-                    b.Navigation("FollowedByOther");
+                    b.Navigation("PeopleFollowMe");
 
-                    b.Navigation("FollowingOther");
+                    b.Navigation("PeopleIFollow");
 
                     b.Navigation("Photos");
                 });

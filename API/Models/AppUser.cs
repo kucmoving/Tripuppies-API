@@ -15,6 +15,8 @@
         public int Experience { get; set; }
         public string Gender { get; set;} 
         public string Region { get; set; } 
+        public ICollection<UserFollow> FollowingOther { get; set; }
+        public ICollection <UserFollow> FollowedByOther { get; set; }
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
     }
 }
