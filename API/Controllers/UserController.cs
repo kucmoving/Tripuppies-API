@@ -53,8 +53,9 @@ namespace API.Controllers
         //           return await _userRepository.GetPuppyAsync(username);
         //        }
 
-        [Authorize]
-        [HttpGet("{username}", Name = "GetUser")]
+        //[HttpGet("{username}", Name = "GetUser")]
+        [HttpGet("{username}")]
+
         public async Task<ActionResult<PuppyDto>> GetUser(string username)
         {
             var result = await _userRepository.GetPuppyAsync(username);
