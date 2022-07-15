@@ -40,6 +40,7 @@ namespace API.Tests.Repository
             }
             return databaseContext;
         }
+
         [Fact]
         public async void UserRepository_GetPuppyAsync_ReturnPuppy()
         {
