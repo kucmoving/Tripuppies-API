@@ -41,9 +41,12 @@ namespace API.Tests.Repository
             return databaseContext;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> e357a559256572903559e641d4e4a76e70d4275b
+=======
+>>>>>>> parent of 4b6e148 (deployapiwithserver)
         [Fact]
         public async void UserRepository_GetPuppyAsync_ReturnPuppy()
         {
