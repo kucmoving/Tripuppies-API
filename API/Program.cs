@@ -105,6 +105,12 @@ app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
+<<<<<<< HEAD
+=======
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+>>>>>>> e357a559256572903559e641d4e4a76e70d4275b
 
 app.MapControllers();
 

@@ -53,8 +53,13 @@ namespace API.Controllers
         //           return await _userRepository.GetPuppyAsync(username);
         //        }
 
+<<<<<<< HEAD
         [HttpGet("{username}", Name = "GetUser")]
         //[HttpGet("{username}")]
+=======
+        //[HttpGet("{username}", Name = "GetUser")]
+        [HttpGet("{username}")]
+>>>>>>> e357a559256572903559e641d4e4a76e70d4275b
 
         public async Task<ActionResult<PuppyDto>> GetUser(string username)
         {

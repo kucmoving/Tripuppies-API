@@ -7,14 +7,22 @@
   "parameters": {
     "resourceGroupName": {
       "type": "string",
+<<<<<<< HEAD
       "defaultValue": "uk-south-free",
+=======
+      "defaultValue": "rg2",
+>>>>>>> e357a559256572903559e641d4e4a76e70d4275b
       "metadata": {
         "description": "Name of the resource group for the resource. It is recommended to put resources under same resource group for better tracking."
       }
     },
     "resourceGroupLocation": {
       "type": "string",
+<<<<<<< HEAD
       "defaultValue": "uksouth",
+=======
+      "defaultValue": "ukwest",
+>>>>>>> e357a559256572903559e641d4e4a76e70d4275b
       "metadata": {
         "description": "Location of the resource group. Resource groups could have different location than resources, however by default we use API versions from latest hybrid profile which support all locations for resource types we support."
       }
