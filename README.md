@@ -1,6 +1,6 @@
 <h2>Introduction</h2>
 
-[Tripuppies](https://tricli.azurewebsites.net/) is a social media for travelers and guides. This website allows users to update their personal information, search for others by specific criteria and communicate with their match(follow and message).
+[Tripuppies](https://tricli.azurewebsites.net/) is a social media for travelers and guides. This website allows users to update their personal information, search for others by specific criteria and communicate with their match(follow and message).This website is built by bootstrap template, Angular, Asp.net Core, SQL and Azure deployment.
 
 ![image](https://user-images.githubusercontent.com/92262463/179397781-66bc7e23-fa53-4a1b-af05-a2982938d216.png)
 
