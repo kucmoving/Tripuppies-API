@@ -38,11 +38,11 @@
 Here are some elements I have learnt after this project:<br>
 
 1. Deep dive into many-to-many-relationship
-* Many-to-many-relationship is quite confusing when we are creating table but we can have a better naming in poco or draw a database mind map before coding, just 
-like the picture below(not as same as the final product)
-*Follow function is easier one that simply linking the relationship record
-*Message function is the harder one. First, we should define more pocos with different data types in entity and understand that a message thread is a list of message
 ![image](https://user-images.githubusercontent.com/92262463/179399762-07dd47ca-79a5-40d6-bb44-eef6345efd05.png)
+* Many-to-many-relationship is quite confusing when we are creating table but we can have a better naming in poco or draw a database mind map before coding, just 
+like the picture below(not as same as the final product)<br>
+* Follow function is easier one that simply linking the the <AppUser> with Joint table <UserFollower>
+* Message function is the harder one. First, we should define more pocos with different data types in entity and understand that a message thread is a list of message
 
 2. Angular Component Operation
 * Angular is a component framework with different files that can make the project easier to maintain. Angular is complicated because there are lots of files but developers can use the hotkeys in vs code to deal with it.
