@@ -27,12 +27,12 @@ namespace API.Controllers
             _imapper = imapper;
         }
 
-        [HttpGet]     //MessageParams : UserName, Container
+        [HttpGet]     //MessageParams : UserName, Container // Query because of unread or other input?
         public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesForUser([FromQuery] MessageParams messageParams)
         {
             messageParams.UserName = User.GetUsername();
             var messages = await _messageRepository.GetMessagesForUser(messageParams);
-            // http response
+            // http response(add paginationheader)
             Response.AddPaginationHeader(messages.CurrentPage, messages.PageSize,
                 messages.TotalCount, messages.TotalPages);
 
@@ -53,14 +53,18 @@ namespace API.Controllers
         {
             var username = User.GetUsername();
 
+            //cannot chat with yourself 
             if (username == createMessageDto.RecipientName.ToLower())
                 return BadRequest("please chat with others");
 
+            //get the username 
             var sender = await _userRepository.GetUserByUsernameAsync(username);
             var recipient = await _userRepository.GetUserByUsernameAsync(createMessageDto.RecipientName);
 
             if (recipient == null) return NotFound();
-            var message = new Message                 //to  rganize the details to pass it to message 
+
+            //to  organize the details to pass it to message 
+            var message = new Message                 
             {
                 Sender = sender,
                 Recipient = recipient,
@@ -83,6 +87,8 @@ namespace API.Controllers
 
             var message = await _messageRepository.GetMessage(id);
 
+            //set the logic (del)
+
             if (message.Sender.UserName != username && message.Recipient.UserName != username)
                 return Unauthorized();
 
@@ -92,6 +98,8 @@ namespace API.Controllers
 
             if (message.SenderDel && message.RecipientDel)
                 _messageRepository.DelMessage(message);
+
+            //to save
 
             if (await _messageRepository.SaveAllAsync()) return Ok();
 

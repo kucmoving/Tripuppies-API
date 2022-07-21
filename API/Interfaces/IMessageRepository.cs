@@ -21,6 +21,5 @@ namespace API.Interfaces
 
         //to create 
         Task<bool> SaveAllAsync();
-
     }
 }

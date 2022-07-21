@@ -26,8 +26,8 @@ namespace API.Repository
                 .ProjectTo<PuppyDto>(_imapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
-
-
+        //using project to map, configurationprovider imapper built in function
+        //but is it good for testing or others to read??
 
 
         public async Task<AppUser> GetUserByIdAsync(int id)
@@ -56,24 +56,28 @@ namespace API.Repository
 
         public void Update(AppUser user)
         {
-            _dataContext.Entry(user).State = EntityState.Modified;
+            _dataContext.Entry(user).State = EntityState.Modified; //using built in function to change state
         }
 
         public async Task<PagedList<PuppyDto>> GetPuppiesAsync(UserParams userParams)
         {
             var query = _dataContext.Users.AsQueryable();
 
+            //no user
             query = query.Where(u => u.UserName != userParams.CurrentUsername);
+            //same role 
             query = query.Where(u => u.Role == userParams.Role);
+            //experience 
             query = query.Where(u => u.Experience >= userParams.MinExp && u.Experience <= userParams.MaxExp);
 
+            // using switch to do simple filtering
             query = userParams.OrderBy switch
             {
                 "created" => query.OrderByDescending(x => x.Created),
                 _ => query.OrderByDescending(u => u.LastTime)
             };
 
-
+            //asnotracking, to prevent 2 query same time ==> error
             return await PagedList<PuppyDto>.CreateAsync(query.ProjectTo<PuppyDto>(_imapper
                 .ConfigurationProvider).AsNoTracking(),
                     userParams.PageNumber, userParams.PageSize);

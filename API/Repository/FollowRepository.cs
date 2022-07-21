@@ -15,9 +15,7 @@ namespace API.Repository
             _dataContext = dataContext;
         }
         
-        
-        
-        //
+       
         public async Task<UserFollow> GetUserFollowInfo(int followerId, int leaderId)
         {
             return await _dataContext.UserFollows.FindAsync(followerId, leaderId);
@@ -30,15 +28,16 @@ namespace API.Repository
             return await _dataContext.Users
                 .Include(x => x.FollowingOther)
                 .FirstOrDefaultAsync(x => x.Id == userId);
-
         }
 
         public async Task<IEnumerable<FollowDto>> GetUserFollowDetails(string predicate, int userId)
         {
             //use joint query to make
+            //Asqueryable will not execute instantly, but super efficient
             var users = _dataContext.Users.OrderBy(u => u.UserName).AsQueryable();
             var follows = _dataContext.UserFollows.AsQueryable();
 
+            //set the condition of predicate
             if (predicate == "following")  //user following
             {
                 follows = follows.Where(u => u.FollowerId == userId);

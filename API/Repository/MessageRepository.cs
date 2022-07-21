@@ -38,21 +38,28 @@ namespace API.Repository
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<PagedList<MessageDto>> GetMessagesForUser(MessageParams messageParams)
+
+        public async Task<PagedList<MessageDto>> GetMessagesForUser(MessageParams messageParams) //parmas with username, string
         {
             var query = _dataContext.Messages
-                .OrderByDescending(m => m.SendTime)                                  //SendTime(Date) in Messages
+                .OrderByDescending(m => m.SendTime)            //SendTime(Date) in Messages
                 .AsQueryable();
+
+         //using switch 
             query = messageParams.Container switch
             {
                 "Inbox" => query.Where(x => x.Recipient.UserName == messageParams.UserName),
                 "Outbox" => query.Where(x => x.Sender.UserName == messageParams.UserName),
                 _ => query.Where(x => x.Recipient.UserName ==
-                messageParams.UserName && x.ReadTime == null)                 //ReadTime(Date) in Message 
+                messageParams.UserName && x.ReadTime == null)  //ReadTime(Date) in Message 
             };
+
+            //using projectto matching
+            //using createAsync in pagelist class 
             var messages = query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider);
             return await PagedList<MessageDto>.CreateAsync(messages, messageParams.PageNumber, messageParams.PageSize);
         }
+
 
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername)
@@ -60,6 +67,7 @@ namespace API.Repository
             var messages = await _dataContext.Messages
                 .Include(u => u.Sender).ThenInclude(p => p.Photos)
                 .Include(u => u.Recipient).ThenInclude(p => p.Photos)
+                           //super complicated logic 
                            //你接收的信 // 未刪 // 對方寄的來信
                            //你寄出的信 // 未刪 // 對方應應收的來信
                 .Where(m => m.Recipient.UserName == currentUsername && m.RecipientDel == false

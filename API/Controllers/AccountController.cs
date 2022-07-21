@@ -31,22 +31,22 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
+            //check user exists
             if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
 
+            //will dispose if finish
             using var hmac = new HMACSHA512();
 
             user.UserName = registerDto.Username;
             user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
-                user.PasswordSalt = hmac.Key;
+            user.PasswordSalt = hmac.Key;
             user.NickName = registerDto.NickName;
-                user.Gender = registerDto.Gender;
+            user.Gender = registerDto.Gender;
             user.Role = registerDto.Role;
             user.PreferStyle = registerDto.PreferStyle;
             user.Region = registerDto.Region;
-
-
 
             _dataContext.Users.Add(user);
             await _dataContext.SaveChangesAsync();
@@ -75,7 +75,6 @@ namespace API.Controllers
             if (user == null) return Unauthorized("Invalid username");
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
-
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
             for (int i = 0; i < computedHash.Length; i++)
@@ -86,6 +85,7 @@ namespace API.Controllers
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
+                //maybe there is no photos
                 PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
                 Nickname = user.NickName,
                 Role = user.Role

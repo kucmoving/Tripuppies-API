@@ -30,8 +30,10 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        //FromQuery will create query domain ? = &
         public async Task<ActionResult<IEnumerable<PuppyDto>>> GetUsers([FromQuery] UserParams  userParams)
         {
+            //User from controller base, GetUsername from static class 
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
             userParams.CurrentUsername = user.UserName;
 
@@ -39,7 +41,6 @@ namespace API.Controllers
      //           userParams.Role = user.Role == "Traveller" ? "Guide" : "Traveller";
 
             var users = await _userRepository.GetPuppiesAsync(userParams);
-
             Response.AddPaginationHeader(users.CurrentPage, users.PageSize,
                 users.TotalCount, users.TotalPages);
 
@@ -53,9 +54,9 @@ namespace API.Controllers
         //           return await _userRepository.GetPuppyAsync(username);
         //        }
 
-        [HttpGet("{username}", Name = "GetUser")]
-        //[HttpGet("{username}")]
 
+        // dynamic domain-->personal page
+        [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<PuppyDto>> GetUser(string username)
         {
             var result = await _userRepository.GetPuppyAsync(username);
@@ -69,10 +70,12 @@ namespace API.Controllers
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
             var result = await _photoService.AddPhotoAsync(file);
 
+            //cloudinary built in
             if (result.Error != null) return BadRequest(result.Error.Message);
 
             var photo = new Photo
             {
+                //cloudinary built in
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
             };
@@ -85,6 +88,7 @@ namespace API.Controllers
             user.Photos.Add(photo);
             if (await _userRepository.SaveAllAsync())
                 //return _mapper.Map<PhotoDto>(photo);
+                //route name, route value, object ...
                 return CreatedAtRoute("GetUser", new { username = user.UserName }, _imapper.Map<PhotoDto>(photo));
 
             return BadRequest("problem adding photo");
@@ -135,9 +139,6 @@ namespace API.Controllers
             if (await _userRepository.SaveAllAsync()) return Ok();
             return BadRequest("Failed to delete the photo");
         }
-
-
-
     }
 }
 

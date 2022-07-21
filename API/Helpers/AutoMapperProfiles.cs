@@ -8,6 +8,7 @@ namespace API.Helpers
     {
         public AutoMapperProfile()
         {
+            //formemeber, to link manually
             CreateMap<AppUser, PuppyDto>()
                 .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src =>
                     src.Photos.FirstOrDefault(x => x.IsMain).Url));

@@ -29,9 +29,9 @@ namespace API.Controllers
             var peopleIFollow = await _userRepository.GetUserByUsernameAsync(username);              //get leader name 
             if (peopleIFollow == null) return NotFound();
 
-            var followerId = User.GetUserId();                                                                                 //get leader id 
+            var followerId = User.GetUserId();                                                        //get leader id 
 
-            var follower = await _followRepository.GetUserFollowing(followerId);                                 //to define user following
+            var follower = await _followRepository.GetUserFollowing(followerId);                      //to define user following
             if (follower.UserName == username) return BadRequest("You cannot follow yourself");
 
 

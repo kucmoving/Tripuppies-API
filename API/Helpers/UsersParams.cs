@@ -1,7 +1,10 @@
 ﻿namespace API.Helpers
 {
+    //inherted paginationparams 
     public class UserParams : PaginationParams
     {
+        //default setting params
+
         public string? CurrentUsername { get; set; }
         public string? Role { get; set; }
 
